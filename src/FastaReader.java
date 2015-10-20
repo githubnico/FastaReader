@@ -24,6 +24,7 @@ public class FastaReader {
         this.space = 2;
     }
 
+    // read in fasta from filepath
     public void readInFasta() throws IOException {
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -45,6 +46,7 @@ public class FastaReader {
 
     }
 
+    // Print out fasta into command line
     public void printFasta() {
 
         ArrayList<String> myOutput = new ArrayList<String>();
@@ -57,7 +59,9 @@ public class FastaReader {
         }
         int outputBlocks = maxSequence/lineBreak;
         for(int i = 0; i<=outputBlocks; i++){
-            myOutput.add(StringUtils.repeat(" ", maxDescription + space) + new Integer(1 + i*lineBreak));
+            Integer first = new Integer(1 + i*lineBreak);
+            Integer second = new Integer(Math.min(i*lineBreak+lineBreak, maxSequence));
+            myOutput.add(StringUtils.repeat(" ", maxDescription + space) + first + StringUtils.repeat(" ", (second - first.toString().length() - second.toString().length())%lineBreak) + second.toString());
             for(Sequence currentSequence: mySequences){
                 myOutput.add(currentSequence.getDescription() + StringUtils.repeat(" ", maxDescription + space - currentSequence.descriptionSize()) + currentSequence.toSubstring(i*lineBreak, i*lineBreak+lineBreak));
             }
