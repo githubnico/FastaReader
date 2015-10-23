@@ -69,11 +69,11 @@ public class Sequence {
         return myString;
     }
 
-    public int descriptionSize(){
+    public int descriptionSize() {
         return description.length();
     }
 
-    public int sequenceSize(){
+    public int sequenceSize() {
         return mySequence.size();
     }
 
