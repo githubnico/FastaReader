@@ -36,11 +36,13 @@ public class FastaReader {
                     currentSequence.stringToSequence(sequenceString);
                     mySequences.add(currentSequence);
                 }
-
             }
 
+        } catch (IOException e){
+            System.out.println("Error in read of :" + e.getMessage());
+        } catch(Exception e){
+            System.out.println(e.getMessage());
         }
-
     }
 
     public ArrayList<Sequence> getMySequences() {
@@ -70,7 +72,7 @@ public class FastaReader {
         int outputBlocks = maxSequence / lineBreak;
         for (int i = 0; i <= outputBlocks; i++) {
 
-            if (isNumbering) {
+            if (isNumbering && mySequences.size() > 0) {
                 Integer first = new Integer(1 + i * lineBreak);
                 Integer second = new Integer(Math.min(i * lineBreak + lineBreak, maxSequence));
 
@@ -82,7 +84,7 @@ public class FastaReader {
             for (Sequence currentSequence : mySequences) {
                 String lines;
                 if (!isHeaders) {
-                    lines = repeat(" ", maxDescription + space );
+                    lines = repeat(" ", maxDescription + space);
                 } else {
                     lines = currentSequence.getDescription() + repeat(" ", maxDescription + space - currentSequence.descriptionSize());
                 }
@@ -105,6 +107,7 @@ public class FastaReader {
 
     }
 
+    // Alternative method with standard parameters
     public ArrayList<String> printFasta() {
 
         return printFasta(new ArrayList<Boolean>(Arrays.asList(new Boolean[]{true, true, true})));

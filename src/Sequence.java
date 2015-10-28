@@ -1,4 +1,6 @@
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Deviltech on 20.10.2015.
@@ -7,11 +9,13 @@ public class Sequence {
 
     private String description;
     private ArrayList<Nucleotide> mySequence;
+    private String nucleotideTypes;
 
     // Constructor
     public Sequence(String description, ArrayList<Nucleotide> mySequence) {
         this.description = description;
         this.mySequence = mySequence;
+        this.nucleotideTypes =  "AGCU-";
     }
 
     // Constructor without existing sequence
@@ -44,8 +48,8 @@ public class Sequence {
     // Generates a nucleotide sequence from string
     public void stringToSequence(String s) {
         for (int i = 0; i < s.length(); i++) {
-            mySequence.add(new Nucleotide(s.charAt(i)));
-        }
+                mySequence.add(new Nucleotide(s.charAt(i)));
+            }
     }
 
     // Returns the string of the nucleotide list
@@ -75,6 +79,15 @@ public class Sequence {
 
     public int sequenceSize() {
         return mySequence.size();
+    }
+
+    private boolean contains(char c){
+        for (char element : nucleotideTypes.toCharArray()){
+            if(element == c){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
