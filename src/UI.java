@@ -24,9 +24,11 @@ public class UI extends Application {
         super.init();
     }
 
+    // Replaces the Main
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        // Graphics
         BorderPane borderPane = new BorderPane();
         Label descriptionLabel = new Label(myLabels.MAIN_CAPTION);
         Text mainText = new Text();
@@ -51,20 +53,24 @@ public class UI extends Application {
         checkerList.add(checkerNumbering);
 
         // Set checkbox true by default
-        checkerList.forEach(checker -> checker.setSelected(true));
+        checkerList.forEach((checker) -> checker.setSelected(true));
 
+        // list of command line arguments
         List<String> args;
 
         try {
+            // get command line arguments
             args = getParameters().getRaw();
+
+            // read in the fasta file with the file path
             FastaReader myFasta = new FastaReader(args.get(0));
             myFasta.readInFasta();
 
+            // refresh text label according to settings
             mainText.setText(refreshText(myFasta));
 
-            buttonApply.setOnAction((value) -> {
-                        mainText.setText(refreshText(myFasta));
-                    }
+            // refresh text label on apply button
+            buttonApply.setOnAction((value) -> mainText.setText(refreshText(myFasta))
             );
         } catch (Exception e) {
             System.out.println("No correct parameters " + e.getMessage());
@@ -72,12 +78,14 @@ public class UI extends Application {
         }
 
 
+        //set every font character the same size
         mainText.setFont(monospaced);
 
         buttonClear.setOnAction((value) -> setCheckCheckers(false));
         buttonSelect.setOnAction((value) -> setCheckCheckers(true));
 
 
+        // add buttons and checkboxes to UI
         buttonBox.getChildren().addAll(buttonSelect, buttonClear, buttonApply);
         checkerBox.getChildren().addAll(checkerHeaders, checkerSequences, checkerNumbering);
 
@@ -86,12 +94,13 @@ public class UI extends Application {
         borderPane.setBottom(buttonBox);
         borderPane.setRight(checkerBox);
 
+        // Prepare scene
         Scene scene = new Scene(borderPane, 800, 600);
 
         primaryStage.setScene(scene);
         primaryStage.setTitle(myLabels.MAIN_TITLE);
 
-
+        // show scene
         primaryStage.show();
 
     }
@@ -108,6 +117,7 @@ public class UI extends Application {
         }
     }
 
+    // get if all checkers are selected/deselected
     public ArrayList<Boolean> getCheckerBools() {
         ArrayList<Boolean> result = new ArrayList<Boolean>();
         for (CheckBox checker : checkerList) {
